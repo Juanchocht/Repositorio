@@ -1,0 +1,138 @@
+1) Inyección de dependencias
+
+En Informática, Inyección de Dependencias (en inglés Dependency Injection, DI) es un patrón de diseño orientado a objetos, en el que se suministran objetos a una clase en lugar de ser la propia clase quien cree el objeto. El término fue acuñado por primera vez por Martin Fowler.
+
+La Dependencia de Inyección es un concepto muy sencillo: si tienes un objeto que interactua con otros objetos, la responsabilidad de encontrar una referencia a estos objetos en tiempo de ejecución se saca fuera del objeto en si mismo.
+
+¿Qué significa para un objeto “interactuar” con otros objetos? Generalmente significa invocar métodos o leer atributos de estos objetos. Así si tenemos una clase A que invoca el método Calculate de la clase B, podemos decir que A interactua con B.
+
+En el siguiente ejemplo se muestra una clase A interactuando con una clase B. También podemos decir que A depende de la clase B para llevar a cabo una responsabilidad. En este caso, no solo se invoca al método Calculate pero también se crea una nueva instancia de la clase.
+
+class A {
+private B _b;
+
+public A {
+_b = new B();
+}
+
+public int SomeMethod() {
+return (_b.Calculate() * 2);
+}
+}
+
+En el siguiente ejemplo, la responsabilidad de hacer una referencia a una implementación de una clase de tipo B se mueve fuera de A.
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+class A {
+private B _b;
+public A(B b) {
+_b = b;
+}
+public int SomeMethod() {
+return _(b.Calculate * 2);
+}
+}
+En este caso se dice que una dependencia (B) ha sido inyectada dentro de A, mediante el constructor. Por supuesto, también se pueden inyectar dependencias a través de un atributo (o incluso en un método), como en el ejemplo siguiente:
+
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+class A {
+private B _b;
+ 
+public B B {
+get { return _b; }
+set { _b = value; }
+}
+ 
+public int SomeMethod()  {
+if (_b != null)
+return _b.RetrieveValue() * 2;}
+else
+// HANDLE THIS ERROR CASE
+return -1;
+}
+}
+Esto es todo lo que hay sobre la inyección de dependencia. Todo lo demás se basa en este concepto básico.
+
+Como por ejemplo las herramientas de Inversión de Control (IoC) que ayuda conectar los objetos en tiempo de ejecución, inyectando todas las dependencias según sea necesario. Entonces, ¿qué es exactamente la inversión de control y cómo se relaciona con la inyección de dependencias (DI)?
+
+Me gusta asociar la IoC a el Hollywood Principle: “No nos llame, nosotros te llamaremos”. IoC es un principio de diseño donde el código reutilizable controla la ejecución del código de un problema específico: es una característica de muchos frameworks, donde la aplicación está construida extendiendo o personalizando un esqueleto común, se ponen las clases en puntos específicos y el framework las llama cuando es necesario.
+
+Puedes utilizar un contenedor IoC como un framework para llevar a cabo la inyección de dependencia en tú lugar: decirle al contenedor cuales son las implementaciones concreta de las clases para las dependencias y el contenedor asegurará que sus constructores o setters serán llamados con los objetos adecuados.
+
+Por lo tanto, los contenedores IoC son sólo una comodidad para simplificar como se maneja la inyección de dependencias. Pero incluso si no usas uno puedes realizar manualmente la inyección de dependencias.
+
+(Si quieres echar un vistazo a cómo funciona un contenedor IoC puedes ir al tutorial mini tutorial on Ninject de Stefano Ricciardi)
+
+¿Por qué el concepto de inyección de dependencias es tan importante? Porque mediante su utilización, se simplifica el diseño (que separa la responsabilidad de usar un objeto de la responsabilidad de recuperar ese objeto) y el código se vuelve mucho más fácil de probar, ya que se puede falsearse las dependencias sustituyéndolos con falsos (stub) objetos. Pero eso es tema para otro post.
+
+Fuente: http://stefanoricciardi.com/2011/11/08/dependency-injection-for-dummies/ 
+
+2) REPOSITORIO
+
+Un repositorio, depósito o archivo es un sitio centralizado donde se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
+
+Los datos almacenados en un repositorio pueden distribuirse a través de una red informática, como Internet, o de un medio físico, como un disco compacto. Pueden ser de acceso público o estar protegidos y necesitar de una autentificación previa. Los repositorios más conocidos son los de carácter académico e institucional. Los repositorios suelen contar con sistemas de respaldo (copia de seguridad) y mantenimiento preventivo y correctivo, lo que hace que la información se pueda recuperar en el caso que la máquina quede inutilizable.
+Depositar no debe confundirse con publicar. El depósito en los repositorios es una manera de comunicar públicamente los trabajos de los investigadores, aumentando su difusión: los autores ponen disponibles en acceso abierto una versión de los artículos que han publicado en revistas, tradicionales o de acceso abierto.
+
+3) MODELO VISTA CONTROLADOR
+El Modelo Vista Controlador (MVC) es un patrón de arquitectura de software que separa los datos y la lógica de negocio de una aplicación de la interfaz de usuario y el módulo encargado de gestionar los eventos y las comunicaciones. Para ello MVC propone la construcción de tres componentes distintos que son el modelo, la vista y el controlador, es decir, por un lado define componentes para la representación de la información, y por otro lado para la interacción del usuario1 2 . Este patrón de diseño se basa en las ideas de reutilización de código y la separación de conceptos, características que buscan facilitar la tarea de desarrollo de aplicaciones y su posterior mantenimiento
+
+El patrón de arquitectura MVC (Modelo Vista Controlador) es un patrón que define la organización independiente del Modelo (Objetos de Negocio), la Vista (interfaz con el usuario u otro sistema) y el Controlador (controlador del workflow de la aplicación).
+
+De esta forma, dividimos el sistema en tres capas donde, como explicaremos más adelante, tenemos la encapsulación de los datos, la interfaz o vista por otro y por último la lógica interna o controlador.
+
+
+El patrón de arquitectura "modelo vista controlador", es una filosofía de diseño de aplicaciones, compuesta por:
+
+Modelo
+Contiene el núcleo de la funcionalidad (dominio) de la aplicación.
+Encapsula el estado de la aplicación.
+No sabe nada / independiente del Controlador y la Vista.
+Vista
+Es la presentación del Modelo.
+Puede acceder al Modelo pero nunca cambiar su estado.
+Puede ser notificada cuando hay un cambio de estado en el Modelo.
+Controlador
+Reacciona a la petición del Cliente, ejecutando la acción adecuada y creando el modelo pertinente
+Para entender cómo funciona nuestro patrón Modelo vista controlador, se debe entender la división a través del conjunto de estos tres elementos y como estos componentes se comunican unos con los otros y con otras vistas y controladores externos a el modelo principal. Para ello, es importante saber que el controlador interpreta las entradas del usuario (tanto teclado como el ratón), enviado el mensaje de acción al modelo y a la vista para que se proceda con los cambios que se consideren adecuados
+
+Comunicación
+
+El modelo, la vista y el controlador deben comunicarse de una manera estable los unos con los otros, de manera que sea coherente con las iteraciones que el usuario realizara. Como es lógico la comunicación entre la vista y el controlador es bastante básica pues están diseñados para operar juntos, pero los modelos se comunican de una manera diferente, un poco más sutil
+
+Modelo pasivo
+
+No es necesario para el modelo hacer ninguna tener alguna disposición a él, simplemente basta con tener en cuenta su existencia. El modelo no tiene ninguna responsabilidad para comunicar los cambios a la vista porque ocurren solo por orden del usuario, por lo que esta función la llevara a cabo el controlador porque será el que interprete las ordenes de este usuario debido a que solo debe comunicar que algo ha cambiado. Por esto, el modelo es se encuentra en modo inconsciente y su participación en este caso es irrisoria.
+
+Unión del modelo con la vista y el controlador
+
+Como no todos los modelos pueden ser pasivos, necesitamos algo que comunique al controlador y a la vista, por lo que en este caso, si que necesitamos el modelo, ya que solo este puede llevar a cabo los cambios necesarios al estado actual en el que estos se encuentran.
+
+Al contrario que el modelo, que puede ser asociado a múltiples asociaciones con otras vistas y controladores, cada vista solo puede ser asociada a un único controlador, por lo que han de tener una variable de tipo controler que notificara a la vista cual es su controlador o modelo asignado. De igual manera, el controlador tiene una variable llamada View que apunta a la vista. De esta manera, pueden enviarse mensajes directos el uno al otro y al mismo tiempo, a su modelo.
+
+Al final, la vista es quien lleva la responsabilidad de establecer la comunicación entre los elementos de nuestro patrón MVC. Cuando la vista recibe un mensaje que concierne al modelo o al controlador, lo deja registrado como el modelo con el cual se comunicara y apunta con la variable controller al controlador asignado, enviándole al mismo su identificación para que el controlador establezca en su variable view el identificador de la vista y así puedan operar conjuntamente. El responsable de deshacer estas conexiones, seguirá siendo la vista, quitándose a si misma como dependiente del modelo y liberando al controlador.
